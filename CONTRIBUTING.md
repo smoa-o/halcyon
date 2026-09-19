@@ -21,7 +21,7 @@ When submitting a PR, please indicate in the description which license your code
 
 ### Submit code
 
-1. Fork's own warehouse [![Fork me on Gitee](https://gitee.com/smoa-new/halcyon/widgets/widget_5.svg)](https://gitee.com/smoa-new/halcyon)
+1. Fork's own warehouse (Gitee: [![Fork me on Gitee](https://gitee.com/smoa-new/halcyon/widgets/widget_5.svg)](https://gitee.com/smoa-new/halcyon))
 2. Create a branch See [BRANCH.md](./BRANCH.md)
 3. Submit changes
 4. Push to your Fork

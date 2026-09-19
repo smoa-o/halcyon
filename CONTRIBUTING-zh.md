@@ -21,7 +21,7 @@ Halcyon采用 **双许可证** 模式:
 
 ### 提交代码
 
-1. Fork 仓库 [![Fork me on Gitee](https://gitee.com/smoa-new/halcyon/widgets/widget_5.svg)](https://gitee.com/smoa-new/halcyon)
+1. Fork 仓库 (Gitee快捷方式: [![Fork me on Gitee](https://gitee.com/smoa-new/halcyon/widgets/widget_5.svg)](https://gitee.com/smoa-new/halcyon))
 2. 创建分支 (请参考 [BRANCH.md](./BRANCH.md))
 3. 提交变更
 4. 推送到你的 Fork
