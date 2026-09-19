@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use Halcyon in your research, please cite it as below."
+title: "Halcyon Operating System"
+authors:
+  - name: "sauthm_2015"
+    email: "sauthm_2015@qq.com"
+version: "0.1.0"
+date-released: 2026-09-19
+repository-code: "https://gitee.com/smoa-new/halcyon"
+license: "AGPLv3"
