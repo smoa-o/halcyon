@@ -1,5 +1,7 @@
 # Contributing to Halcyon
 
+Language: [中文](./CONTRIBUTING-zh.md) [English](./CONTRIBUTING.md)
+
 Thank you for your interest in the Halcyon operating system! Before submitting the code, please take a few minutes to read the following guidelines.
 
 ## License Description (Important)

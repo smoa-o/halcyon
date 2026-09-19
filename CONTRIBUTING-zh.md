@@ -1,5 +1,7 @@
 # 给Halcyon贡献
 
+语言: [中文](./CONTRIBUTING-zh.md) [English](./CONTRIBUTING.md)
+
 感谢你对Halcyon操作系统贡献！在贡献之前，请花几分钟阅读以下指南:
 
 ## 许可证说明

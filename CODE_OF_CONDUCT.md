@@ -1,6 +1,8 @@
 
 # Contributor Covenant 3.0 Code of Conduct
 
+Langauge: [中文](./CODE_OF_CONDUCT-zh.md) [English](./CODE_OF_CONDUCT.md)
+
 ## Our Pledge
 
 We pledge to make our community welcoming, safe, and equitable for all.

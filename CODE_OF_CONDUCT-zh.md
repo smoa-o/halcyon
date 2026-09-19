@@ -1,6 +1,8 @@
 
 # 贡献者公约
 
+语言: [中文](./CODE_OF_CONDUCT-zh.md) [English](./CODE_OF_CONDUCT.md)
+
 ## 我们的承诺
 
 我们承诺使我们的社区对所有人保持友好、安全且公平。
