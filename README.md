@@ -1,0 +1,42 @@
+# Halcyon Operating System
+
+Language: [中文](./README-zh.md) [English](./README.md)
+
+## Introduction
+
+*Halcyon* is a completely independent operating system,
+integrated operating system kernel and basic APIs.
+
+## Features
+
+1. Independence: Halcyon is a completely independent operating system that does
+not rely on any existing operating system platform.
+
+2. Development: Halcyon32 API is a built-in API in the system, and users can independently extend it.
+
+3. Compatibility: Can run any DOS era executable file (extension. com)
+
+4. Novelty: Not using Windows. exe, and then independently developing a Halcyon executable file (.vexe)
+
+## Directory Structure
+
+### Before installation
+
+A:\IVT\IVT.COM - Run once at startup, set IVT
+A:\IVT\LDR.COM - Launched by IVT.COM for loading
+A:\SYSCMD\     - System Built in Commands
+
+### After installation (new)
+
+A:\CONFIG\     - Configuration folder for each application
+A:\EXTCMD\     - System Extension Command
+
+### Special (default does not exist)
+A:\AUTOEXEC.BAT - Run before each display of `A:\>`
+
+## Contact Us
+
+Email: [sauthm_2015@qq.com](mailto:sauthm_2015@qq.com)
+
+QQ group: 183241333
+Mobile endpoints are conveniently accessed here: [183241333](mqqapi://card/show_pslcard?src_type=internal&version=1&uin=183241333&card_type=group)
