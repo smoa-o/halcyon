@@ -1,7 +1,4 @@
-bin/*
 dsk/*
-build/*
-build/*/*
+bin/*
 !bin/*.md
 !dsk/*.md
-!build/*.md
