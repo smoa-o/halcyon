@@ -1,0 +1,163 @@
+[bits 16]
+section tknl vstart=0x7e00
+tkmain:
+	; Debug Bits:
+	;  0xfe, 0xfd, 0xfb, 0xf7
+	;  0xef, 0xdf, 0xbf, 0x7f
+
+	cli
+	mov bp, 0x8000
+	mov sp, bp
+	xor ax, ax
+	mov ss, ax
+	mov ds, ax
+	mov es, ax
+	mov fs, ax
+	mov gs, ax
+
+	and byte [0x600], 0xef
+	call st_a20
+
+	and byte [0x600], 0xf7
+	call st_gdt
+
+	and byte [0x600], 0xfb
+	call st_pm
+
+	hlt
+	jmp $
+
+st_a20:
+	call .w1
+	mov al, 0xad
+	out 0x64, al ; Ban Keyboard Input
+
+	call .w1
+	mov al, 0xd0
+	out 0x64, al ; Read Out Port
+
+	call .w2
+	in  al, 0x60
+	mov bh, al
+
+	call .w1
+	mov al, 0xd1
+	out 0x64, al
+
+	call .w1
+	mov al, bh
+	or  al, 2
+	out 0x60, al
+
+	call .w1
+	mov al, 0xae
+	out 0x64, al ; Unban Keyboard Input
+
+.w1:
+	in   al, 0x64
+	test al, 1
+	jnz .w1
+	ret
+
+.w2:
+	in   al, 0x64
+	test al, 1
+	jz  .w2
+	ret
+
+st_gdt:
+	lgdt [GdtDescriptor]
+	ret
+
+st_pm:
+	mov eax, cr0
+	or  eax, 1
+	mov cr0, eax
+
+	jmp 0x08:pm_start
+; pm_abs equ pm_start + 0x7e00
+
+GdtStart:
+	dq 0
+.GdtCode:
+    dd 0x0000FFFF      ; 界限=0xFFFF, 基址低16=0x0000
+    dd 0x00CF9A00      ; 基址高8=0, 粒度=CF, 访问=9A, 基址中8=0
+.GdtData:
+	dd 0x0000FFFF
+	dd 0x00CF9200
+GdtEnd:
+GdtDescriptor:
+	dw GdtEnd - GdtStart - 1
+	dd GdtStart
+
+[bits 32]
+pm_start:
+	mov ax, 0x10
+	mov ds, ax
+	mov es, ax
+	mov fs, ax
+	mov gs, ax
+
+	mov ebp, 0x90000
+	mov esp, ebp
+
+	; Load Mproc
+	and byte [0x600], 0xfd
+
+	mov esi, 0x100000
+
+	mov dx, 0x1f7
+	.pwait:
+		in  al, dx
+		and al, 0xc0 ; BSY=0 DRDY=1?
+		cmp al, 0x40
+		jnz .pwait
+
+	mov dx, 0x1f2
+	mov al, 1
+	out dx, al
+	mov eax, esi
+
+	inc dx
+	out dx, al
+
+	inc dx
+	shr eax, 8
+	out dx, al
+
+	inc dx
+	shr eax, 8
+	out dx, al
+
+	inc dx
+	mov bl, al
+	mov al, 0xe0
+	or  al, bl
+	and al, 0xef
+	out dx, al
+
+	inc dx
+	mov al, 0x20
+	out dx, al
+
+	in   al, dx
+	test al, 1
+	jnz .err
+	
+	.nwait:
+		and al, 0x88 ; BSY=0 DRQ=1?
+		cmp al, 8
+		in  al, dx
+		jnz .nwait
+
+	mov dx, 0x1f0
+	mov edi, esi
+	mov ecx, 256
+	rep insw
+
+	and byte [0x600], 0xfe
+	jmp 0x8:dword 0x100000
+
+.err:
+	hlt
+	jmp $
