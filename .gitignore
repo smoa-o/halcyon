@@ -1,0 +1,7 @@
+bin/*
+dsk/*
+build/*
+build/*/*
+!bin/*.md
+!dsk/*.md
+!build/*.md
