@@ -17,9 +17,9 @@ integrated operating system kernel and basic APIs.
 
 2. Development: Halcyon32 API is a built-in API in the system, and users can independently extend it.
 
-3. Compatibility: Can run any DOS era executable file (extension. com)
+3. Compatibility: Can run some DOS era executable files (extension. com)
 
-4. Novelty: Not using Windows. exe, and then independently developing a Halcyon executable file (.vexe)
+4. Novelty: Not using Windows. exe, but rather independently developing a Halcyon executable file (.vexe)
 
 ## Directory Structure
 
