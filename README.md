@@ -2,6 +2,10 @@
 
 Language: [中文](./README-zh.md) [English](./README.md)
 
+[![star](https://gitee.com/smoa-new/halcyon/badge/star.svg?theme=dark)](https://gitee.com/smoa-new/halcyon/stargazers)
+[![fork](https://gitee.com/smoa-new/halcyon/badge/fork.svg?theme=dark)](https://gitee.com/smoa-new/halcyon/members)
+[![Fork me on Gitee](https://gitee.com/smoa-new/halcyon/widgets/widget_6.svg)](https://gitee.com/smoa-new/halcyon)
+
 ## Introduction
 
 *Halcyon* is a completely independent operating system,
@@ -9,8 +13,7 @@ integrated operating system kernel and basic APIs.
 
 ## Features
 
-1. Independence: Halcyon is a completely independent operating system that does
-not rely on any existing operating system platform.
+1. Independence: Halcyon is a completely independent operating system that does not rely on any existing operating system platform.
 
 2. Development: Halcyon32 API is a built-in API in the system, and users can independently extend it.
 

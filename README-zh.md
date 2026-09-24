@@ -2,6 +2,10 @@
 
 语言: [中文](./README-zh.md) [English](./README.md)
 
+[![star](https://gitee.com/smoa-new/halcyon/badge/star.svg?theme=dark)](https://gitee.com/smoa-new/halcyon/stargazers)
+[![fork](https://gitee.com/smoa-new/halcyon/badge/fork.svg?theme=dark)](https://gitee.com/smoa-new/halcyon/members)
+[![Fork me on Gitee](https://gitee.com/smoa-new/halcyon/widgets/widget_6.svg)](https://gitee.com/smoa-new/halcyon)
+
 ## 项目简介
 
 Halcyon操作系统是一个完全独立的操作系统，集成了操作系统内核以及基础API。
