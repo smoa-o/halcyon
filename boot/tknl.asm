@@ -75,18 +75,19 @@ st_pm:
     mov eax, cr0
     or eax, 1
     mov cr0, eax
+
     jmp 0x08:pm_start
 
 ; ---- GDT table ----
 align 4
 GdtStart:
-    dq 0x0000000000000000          ; null
-    dq 0x00cf9a000000ffff          ; code (base=0, limit=4GB, DPL=0, executable)
-    dq 0x00cf92000000ffff          ; data (base=0, limit=4GB, DPL=0, writable)
-GdtEnd:
-
+    dq 0x0000000000000000          ; null (0x00)
+    dq 0x00cf9a000000ffff          ; kernel code (0x08, DPL=0)
+    dq 0x00cf92000000ffff          ; kernel data (0x10, DPL=0)
+    dq 0x00cffa000000ffff          ; user code   (0x18, DPL=3)
+    dq 0x00cff2000000ffff          ; user data   (0x20, DPL=3)
 GdtDescriptor:
-    dw GdtEnd - GdtStart - 1
+    dw GdtDescriptor - GdtStart - 1
     dd GdtStart
 
 ; ============================================================
@@ -173,4 +174,3 @@ ata_read:
 
     popad
     ret
-

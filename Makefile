@@ -45,7 +45,7 @@ compile:
 	nasm -f elf32 $(KERNEL_DIR)/libcyon.asm -o $(OBJ_DIR)/libcyon.o
 	# main process
 	clang -m32 -target i686-elf -ffreestanding -nostdlib -nostdinc -c -I. \
-		$(KERNEL_DIR)/mproc.c -o $(OBJ_DIR)/mproc.o -Weverything \
+		$(KERNEL_DIR)/mproc.c -o $(OBJ_DIR)/mproc.o -Weverything -O3 \
 		-Wno-reserved-macro-identifier -Wno-missing-prototypes
 	ld -m elf_i386 -T linker.ld $(OBJ_DIR)/mproc.o $(OBJ_DIR)/libcyon.o \
 		-o $(OBJ_DIR)/kernel.elf
@@ -69,3 +69,6 @@ ncheck:
 
 run:
 	~/bochs-2.8/bochs -f bochsrc.bxrc
+
+dbg:
+	~/bochs-2.8/bochdbg -f bochsrc.bxrc
