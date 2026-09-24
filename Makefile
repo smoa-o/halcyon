@@ -42,12 +42,12 @@ compile:
 	echo -e "\e[34mcompile: compiling...\e[0m"
 	nasm -f bin $(BOOT_DIR)/bootsect.asm -o $(BIN_DIR)/bootsect.bin # boot section
 	nasm -f bin $(BOOT_DIR)/tknl.asm -o $(BIN_DIR)/tknl.bin # to kernel
-	nasm -f elf32 $(KERNEL_DIR)/libcyon.asm -o $(OBJ_DIR)/libcyon.o
+	nasm -f elf32 $(KERNEL_DIR)/libcyon0.asm -o $(OBJ_DIR)/libcyon0.o
 	# main process
 	clang -m32 -target i686-elf -ffreestanding -nostdlib -nostdinc -c -I. \
 		$(KERNEL_DIR)/mproc.c -o $(OBJ_DIR)/mproc.o -Weverything -O3 \
 		-Wno-reserved-macro-identifier -Wno-missing-prototypes
-	ld -m elf_i386 -T linker.ld $(OBJ_DIR)/mproc.o $(OBJ_DIR)/libcyon.o \
+	ld -m elf_i386 -T linker.ld $(OBJ_DIR)/mproc.o $(OBJ_DIR)/libcyon0.o \
 		-o $(OBJ_DIR)/kernel.elf
 	echo -e "\e[34compile: elf-to-binary...\e[0m"
 	objcopy -O binary $(OBJ_DIR)/kernel.elf $(BIN_DIR)/kernel.bin
