@@ -40,10 +40,10 @@ pcheck:
 
 compile:
 	echo -e "\e[34mcompile: compiling...\e[0m"
-	nasm -f bin $(BOOT_DIR)/bootsect.asm -o $(BIN_DIR)/bootsect.bin # boot section
-	nasm -f bin $(BOOT_DIR)/tknl.asm -o $(BIN_DIR)/tknl.bin # to kernel
+	nasm -f bin $(BOOT_DIR)/bootsect.asm -o $(BIN_DIR)/bootsect.bin -I. # boot section
+	nasm -f bin $(BOOT_DIR)/tknl.asm -o $(BIN_DIR)/tknl.bin -I. # to kernel
 	nasm -f elf32 $(KERNEL_DIR)/libcyon0.asm -o $(OBJ_DIR)/libcyon0.o -I.
-	nasm -f elf32 $(KERNEL_DIR)/libcyon.asm -o $(OBJ_DIR)/libcyon.o
+	nasm -f elf32 $(KERNEL_DIR)/libcyon.asm -o $(OBJ_DIR)/libcyon.o -I.
 	# main process
 	clang -m32 -target i686-elf -ffreestanding -nostdlib -nostdinc -c -I. \
 		$(KERNEL_DIR)/mproc.c -o $(OBJ_DIR)/mproc.o -Weverything -O3 \

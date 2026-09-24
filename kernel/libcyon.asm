@@ -4,7 +4,8 @@ section .text
 
 global usermain
 usermain:
-	mov eax, 0
+	xor eax, eax
+	xor ebx, ebx
 	mov ecx, .done
 	mov edx, esp
 	sysenter

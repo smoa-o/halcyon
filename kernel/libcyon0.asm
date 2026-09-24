@@ -85,9 +85,9 @@ syscall_dispatcher:
 	cmp eax, SysMax
 	ja .invalid
 
-	mov ebx, [.syscall_table + eax * 4]
+	mov ebp, [.syscall_table + eax * 4]
 	xor eax, eax
-	call ebx
+	call ebp
 
 	cmp eax, 0xffff
 	jnz .setcode
