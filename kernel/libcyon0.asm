@@ -4,24 +4,24 @@ section .text
 %if 0
 global ConvertRing
 ConvertRing:
-    ; C调用: ConvertRing(ss, esp, cs, eip)
-    ; 栈: [esp+0]=返回地址 [esp+4]=ss [esp+8]=esp [esp+12]=cs [esp+16]=eip
     mov eax, [esp+4]     ; ss
     mov ecx, [esp+8]     ; esp
     mov edx, [esp+12]    ; cs
     mov ebp, [esp+16]    ; eip
 
-    or eax, 3            ; ss RPL=3  (0x20→0x23)
-    or edx, 3            ; cs RPL=3  (0x18→0x1b)
+    or eax, 3            ; ss RPL=3  (0x20->0x23)
+    or edx, 3            ; cs RPL=3  (0x18->0x1b)
 
     cli
-    push ebp             ; → eip     (iretd弹出第1个)
-    push edx             ; → cs      (iretd弹出第2个)
-    pushfd               ; → eflags  (iretd弹出第3个)
-    push ecx             ; → esp     (iretd弹出第4个)
-    push eax             ; → ss      (iretd弹出第5个)
+    push ebp             ; -> eip
+    push edx             ; -> cs
+    pushfd               ; -> eflags
+    push ecx             ; -> esp
+    push eax             ; -> ss
     iretd
 %endif
+
+%include "kernel/libsys.asm"
 
 global SwitchToRing3
 SwitchToRing3:
@@ -61,24 +61,47 @@ kernelmain:
 	jmp $
 
 sysenter_entry:
-	; ecx: returned address
+	; ecx: return eip
 	; edx: user esp
 	; eax: syscall number
 
-	mov ax, 0x10
+	push eax
+	mov eax, 0x10
 	mov ss, ax
+	mov ds, ax
+	pop eax
 
 	pushad
 	call syscall_dispatcher
 	popad
 	
-	pop eax
-	pop ecx
-	pop edx
+	xor eax, eax
+	mov ax, [0x701]
+	
 	sysexit
 
-; TODO: Dispatch
-syscall_dispatcher: ret
+; TO-DO: Dispatch
+syscall_dispatcher:
+	cmp eax, SysMax
+	ja .invalid
+
+	mov ebx, [.syscall_table + eax * 4]
+	xor eax, eax
+	call ebx
+
+	cmp eax, 0xffff
+	jnz .setcode
+	ret
+
+.invalid:
+	mov byte [0x700], 0x01 ; BADNUM
+.setcode:
+	mov byte [0x700], 0x00 ; SAFE
+	ret
+.syscall_table:
+	dd Halt
+	dd GetErrorCode
+SysMax equ 1
 
 section .bss
 align 16

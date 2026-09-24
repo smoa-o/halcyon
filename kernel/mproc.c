@@ -1,15 +1,16 @@
 #include "kernel/libcyon.h"
 #include "kernel/libcyon0.h"
 
-void usermain(void);
+void umain(void);
 
 void kmain(void) {
 	*((unsigned char*)0x601) = 0xff;
 	kernelmain(); // on kernelmain
 	SwitchToRing3();
-	usermain(); // on usermain
+	umain(); // on umain
 }
 
-void usermain(void) {
+void umain(void) {
+	usermain();
 	for (;;);
 }
