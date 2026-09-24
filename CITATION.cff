@@ -8,3 +8,5 @@ version: "0.1.0"
 date-released: 2026-09-19
 repository-code: "https://gitee.com/smoa-new/halcyon"
 license: "AGPLv3"
+license: "MIT"
+message: "If you use Halcyon in your research, please cite it as below. The kernel API interface is licensed under MIT; see LICENSE-MIT for details. The full operating system is dual-licensed under MIT and AGPLv3; see LICENSE for details."
