@@ -25,8 +25,6 @@ integrated operating system kernel and basic APIs.
 
 ### Before installation
 
-A:\IVT\IVT.COM - Run once at startup, set IVT
-A:\IVT\LDR.COM - Launched by IVT.COM for loading
 A:\SYSCMD\     - System Built in Commands
 
 ### After installation (new)
