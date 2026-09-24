@@ -1,10 +1,7 @@
 [bits 32]
 
 %include "sys/basic.asm"
-
-%if 0
 %include "sys/device.asm"
-%endif
 
 section .text
 
@@ -24,7 +21,6 @@ Basic:
 	dd Halt
 	dd GetErrorCode
 
-%if 0
 Device:
 	cmp ebx, 4
 	ja .invalid
@@ -44,4 +40,3 @@ Device:
 	dd UpdateDevStream
 	dd DeleteDevStream
 	dd DeleteDevBridge
-%endif
