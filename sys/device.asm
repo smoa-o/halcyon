@@ -2,6 +2,7 @@
 
 section .text
 
+; =====PRIMARY SPLITOR===== CreateDevStream
 CreateDevStream:
 	; cf: isM2D
 	; ecx: Count
@@ -49,6 +50,7 @@ CreateDevStream:
 	ret
 
 
+; =====PRIMARY SPLITOR===== CreateDevBridge
 CreateDevBridge:
 	; [stk] DevStream
 	; ecx: Count
@@ -83,6 +85,7 @@ CreateDevBridge:
 	jmp .call_
 
 
+; =====PRIMARY SPLITOR===== UpdateDevBridge
 UpdateDevBridge:
 	; cf: isM2d
 	; ecx: DevNum
@@ -98,6 +101,7 @@ UpdateDevBridge:
 	ja .wata
 	jmp .wfdc
 
+; =====SECONDARY SPLITOR===== UpdateDevBridge :: ata
 .rata:
 	;push ecx
 	call .ata
@@ -106,12 +110,16 @@ UpdateDevBridge:
 	inc dx ; offset: 7
 	out dx, al
 
+	jmp .wait_drqe
 	.wait_drq:
 		in al, 0x1f7
 		test al, 8
 		jz .wait_drq
 		test al, 1
 		jnz .ata_err
+		ret
+	.wait_drqe: ; short label
+	call .wait_drq
 
 	sub dx, 7 ; offset: 0
 	push edx
@@ -127,13 +135,49 @@ UpdateDevBridge:
 	
 	ret
 
+.wata:
+	xchg esi, edi
+	call .ata
+	xchg esi, edi
+
+	mov al, 0x30
+	inc dx ; offset: 7
+	out dx, al
+
+	call .wait_drq
+
+	sub dx, 7 ; offset: 0
+	push edx
+	pop ecx
+	mov eax, ecx
+	mov ebx, 128
+	mul ebx
+	mov ecx, eax
+
+	push esi
+	mov esi, [edi+12] ; OTPT
+	cld
+	rep outsd
+	pop esi
+
+	add dx, 7 ; offset: 7
+	call .wait_bsy0
+
+	in al, dx
+	test al, 1
+	jnz .ata_error
+
+	pop ecx
+	clc
+	ret
+
 .ata_err:
 	sub dx, 6 ; offset: 1
 	in al, dx
 	mov byte [0x701], al
 	mov eax, 0xffff
 	ret
-	
+
 .ata:
 	call .ata_pre
 	pushfd
@@ -203,10 +247,14 @@ UpdateDevBridge:
 	clc
 .ata_psend: ; primary / secondary end
 	add dx, 7
+	jmp .wait_bsy0e
 	.wait_bsy0:
 		in al, dx
 		test al, 0x80
 		jnz .wait_bsy0
+		ret
+	.wait_bsy0e: ; short label
+	call .wait_bsy0
 	.wait_drdy1:
 		in al, dx
 		test al, 0x40
