@@ -1,0 +1,37 @@
+name: Bug Report
+description: Used to report a non security vulnerability. If it is a security vulnerability, please refer to the repository/SECRITY.md
+title: "[Bug] "
+
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: v0.0.1-b1-prel
+      description: To write the complete version number, it is assumed to be the latest version if not written
+    validations:
+      required: false
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Details Description
+      description: Briefly describe the problem you have encountered.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduce steps
+      description: Write clearly entering ..., clicking ... doing ... action, appear ... Error
+    validations:
+      required: false
+
+  - type: textarea
+    id: behaviour
+    attributes:
+      label: 行为
+      description: Write down the expected behavior and actual behavior clearly
+    validations:
+      required: false

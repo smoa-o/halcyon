@@ -21,7 +21,7 @@ body:
       required: true
 
   - type: textarea
-    id: diarrhea
+    id: reproduce
     attributes:
       label: 复现步骤
       description: 写明白进入...，点击...，做...动作，出现...错误
