@@ -1,0 +1,13 @@
+name: 漏洞报告
+description: 用于报告一个非安全漏洞。如果是安全漏洞，请看仓库/SECURITY.md
+title: "[Bug] "
+
+body:
+  - type: input
+    id: version
+    attributes:
+      label: 版本号
+      placeholder: v0.0.1-b1-prel
+      description: 要写完整版本号，不写默认认为是最新版本
+    validations:
+      required: false
