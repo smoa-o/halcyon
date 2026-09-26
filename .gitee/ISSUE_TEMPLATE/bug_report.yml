@@ -16,5 +16,22 @@ body:
     id: details
     attributes:
       label: 详细描述
+      description: 简明扼要地描述你遇到的问题。
     validations:
       required: true
+
+  - type: textarea
+    id: diarrhea
+    attributes:
+      label: 复现步骤
+      description: 写明白进入...，点击...，做...动作，出现...错误
+    validations:
+      required: false
+
+  - type: textarea
+    id: behaviour
+    attributes:
+      label: 行为
+      description: 写明白期望行为与实际行为
+    validations:
+      required: false
