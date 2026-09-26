@@ -11,3 +11,10 @@ body:
       description: 要写完整版本号，不写默认认为是最新版本
     validations:
       required: false
+
+  - type: textarea
+    id: details
+    attributes:
+      label: 详细描述
+    validations:
+      required: true
