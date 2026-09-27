@@ -36,7 +36,8 @@ Device:
 .jumptable:
 	dd CreateDevStream
 	dd CreateDevBridge
+%if 0 ; TODO
 	dd UpdateDevBridge
-	dd UpdateDevStream
 	dd DeleteDevStream
 	dd DeleteDevBridge
+%endif

@@ -3,4 +3,6 @@
 
 void usermain(void);
 
+void sleep(unsigned);
+
 #endif

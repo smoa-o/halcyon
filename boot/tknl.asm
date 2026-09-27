@@ -134,9 +134,9 @@ ata_read:
     test al, 0x40
     jz .bsy_loop
 
-    ; Sector count = 1
+    ; Sector count = 10
     mov dx, 0x1f2
-    mov al, 1
+    mov al, 10
     out dx, al
 
     ; LBA 0 (low, mid, high)
@@ -169,7 +169,7 @@ ata_read:
     ; Read 256 words (512 bytes) from data port
     mov dx, 0x1f0
     mov edi, 0x100000
-    mov ecx, 256
+    mov ecx, 2560
     rep insw
 
     popad

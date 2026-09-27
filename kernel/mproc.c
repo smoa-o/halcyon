@@ -10,7 +10,9 @@ void kmain(void) {
 	umain(); // on umain
 }
 
+__attribute__((noreturn))
 void umain(void) {
 	usermain();
+	sleep(1000);
 	for (;;);
 }

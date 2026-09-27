@@ -57,7 +57,7 @@ compile:
 	dd if=/dev/zero of=$(DISK_DIR)/kernel.hdd bs=512 count=2880
 	dd if=$(BIN_DIR)/bootsect.bin of=$(DISK_DIR)/boot.img bs=512 count=1 conv=notrunc
 	dd if=$(BIN_DIR)/tknl.bin of=$(DISK_DIR)/boot.img bs=512 count=1 seek=1 conv=notrunc
-	dd if=$(BIN_DIR)/kernel.bin of=$(DISK_DIR)/kernel.hdd bs=512 count=2 conv=notrunc,sync
+	dd if=$(BIN_DIR)/kernel.bin of=$(DISK_DIR)/kernel.hdd bs=512 count=10 conv=notrunc,sync
 	echo -e "\e[32mcompile: success\e[0m"
 
 ncheck:

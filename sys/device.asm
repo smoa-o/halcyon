@@ -2,6 +2,17 @@
 
 section .text
 
+; =====PRIMARY SPLITOR===== Struct Declaration
+
+struc DevStream
+	.mgc    resd 1 ; magic
+	.imd    resb 1 ; is memory to device
+	.otpt   resb 3 ; output
+	.dev    resd 1 ; device typeid
+	.acl    resd 1 ; allocated length
+	.bmgc   resd 1 ; back magic (maybe invalid)
+endstruc
+
 ; =====PRIMARY SPLITOR===== CreateDevStream
 CreateDevStream:
 	; cf: isM2D
@@ -16,24 +27,19 @@ CreateDevStream:
 	pushfd
 
 	; 1. set MGC (MaGiC)
-	mov dword [edi], 0x001f203a
-	mov dword [edi+16], 0x001f203b
+	mov dword [edi+DevStream.mgc], 0x001f203a
+	mov dword [edi+DevStream.bmgc], 0x001f203b
 
 	; 2. set IMD (Is Memory to Device)
-	jc .cfe
-	or  byte [edi+4], 0xff
-	jmp .cfend
-.cfe:
-	and byte [edi+4], 0
-.cfend:
+	setc byte [edi+DevStream.imd]
 
 	; 3. set OTPT (OuTPuT)
 	push ecx
 	mov ecx, esi
-	mov byte [edi+5], cl
-	mov byte [edi+6], ch
+	mov byte [edi+DevStream.otpt], cl
+	mov byte [edi+DevStream.otpt+1], ch
 	shl ecx, 16
-	mov byte [edi+7], cl
+	mov byte [edi+DevStream.otpt+2], cl
 	pop ecx
 
 	; 4. set DEV (DEVice number)
@@ -41,10 +47,10 @@ CreateDevStream:
 	jc .nledx
 	mov edx, 0xff
 .nledx:
-	mov dword [edi+8], edx
+	mov dword [edi+DevStream.dev], edx
 
 	; 5. set ACL (AlloCated Length
-	mov dword [edi+12], ecx
+	mov dword [edi+DevStream.acl], ecx
 	
 	clc
 	ret
@@ -59,19 +65,19 @@ CreateDevBridge:
 	
 	; [out] cf: isError
 
-	mov edi, [esp+4]
+	mov edi, [esp+4] ; DevStream
 
-	add edi, 12
+	add edi, DevStream.bmgc
 	cmp dword [edi+4], 0x001f203b
-	jnz .accumulate
-	add edi, 4
+	jnz .accumulate ; full linked list
+	add edi, 4 ; dword
 .call_:
 .getImd:
 	cmp byte [edi-12], 0
 	jnz .lcf
 	clc
 	jmp .lcfend
-.lcf:
+.lcf: ; Load CF
 	stc
 .lcfend:
 	call CreateDevStream
@@ -86,6 +92,7 @@ CreateDevBridge:
 
 
 ; =====PRIMARY SPLITOR===== UpdateDevBridge
+%if 0
 UpdateDevBridge:
 	; cf: isM2d
 	; ecx: DevNum
@@ -124,7 +131,7 @@ UpdateDevBridge:
 	sub dx, 7 ; offset: 0
 	push edx
 	;pop ecx
-	mov eax, [esi+12]
+	mov eax, [esi-10]
 	mov ebx, 128
 	mul ebx ; Count
 	mov ecx, ebx
@@ -260,3 +267,21 @@ UpdateDevBridge:
 		test al, 0x40
 		jz .wait_drdy1
 	ret
+
+; =====SECONDARY SPLITOR===== UpdateDevBridge :: FDC
+.rfdc:
+	call .fdc_pre
+
+	...
+	
+	call .fdc_suf
+
+.fdc_pre:
+.fdc_motor_on:
+	in al, 0x3f2
+	or al, 0x1d
+	mov dx, 0x3f2
+	out dx, al
+
+	ret
+%endif
